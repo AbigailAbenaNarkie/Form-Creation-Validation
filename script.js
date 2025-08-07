@@ -1,32 +1,46 @@
-document.getElementById('signupForm').addEventListener('submit', function (e) {
-  e.preventDefault(); // Prevent form from submitting normally
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registration-form");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const feedback = document.getElementById("form-feedback");
 
-  let name = document.getElementById('name').value.trim();
-  let email = document.getElementById('email').value.trim();
-  let password = document.getElementById('password').value.trim();
-  let errorMessages = document.getElementById('errorMessages');
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Stop normal form submit
+        validateForm();
+    });
 
-  let errors = [];
+    function validateForm() {
+        let messages = [];
 
-  if (name.length < 3) {
-    errors.push('Name must be at least 3 characters.');
-  }
+        // Username: at least 3 characters
+        if (username.value.trim().length < 3) {
+            messages.push("Username must be at least 3 characters long.");
+        }
 
-  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (!emailPattern.test(email)) {
-    errors.push('Please enter a valid email.');
-  }
+        // Email: simple check using @ symbol
+        if (!email.value.includes("@") || !email.value.includes(".")) {
+            messages.push("Please enter a valid email address.");
+        }
 
-  if (password.length < 6) {
-    errors.push('Password must be at least 6 characters.');
-  }
+        // Password: at least 6 characters
+        if (password.value.trim().length < 6) {
+            messages.push("Password must be at least 6 characters long.");
+        }
 
-  if (errors.length > 0) {
-    errorMessages.innerHTML = errors.join('<br>');
-  } else {
-    errorMessages.innerHTML = '';
-    alert('Form submitted successfully!');
-    // You can now submit to a server or reset the form
-  }
+        // Show feedback
+        if (messages.length > 0) {
+            feedback.style.display = "block";
+            feedback.style.backgroundColor = "#ffbaba"; // red background
+            feedback.style.color = "#d8000c"; // red text
+            feedback.innerHTML = messages.join("<br>");
+        } else {
+            feedback.style.display = "block";
+            feedback.style.backgroundColor = "#d4edda"; // green background
+            feedback.style.color = "#155724"; // green text
+            feedback.innerHTML = "Registration successful!";
+        }
+    }
 });
+;
 

@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="form-container">
-    <h2>Registration Form</h2>
-    <form id="registration-form">
+  <form id="registration-form" novalidate>
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
 
@@ -20,11 +18,19 @@
       <input type="password" id="password" name="password" required>
 
       <button type="submit">Register</button>
-    </form>
-    <div id="form-feedback"></div>
-  </div>
+
+      <!-- Accessible, live feedback -->
+      <div id="form-feedback" role="status" aria-live="polite"></div>
+  </form>
+
+  <!-- Container to display users fetched from a public API -->
+  <section id="api-section" aria-label="Fetched users">
+    <h2>Sample users from public API</h2>
+    <button id="load-users">Load sample users</button>
+    <ul id="users-list"></ul>
+  </section>
 
   <script src="script.js"></script>
 </body>
-</html>
+
 
