@@ -1,48 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // ✅ Select the form with id="registration-form"
+  // Form Selection
   const form = document.getElementById('registration-form');
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form from submitting normally
+  // Feedback Division Selection
+  const feedbackDiv = document.getElementById('form-feedback');
 
-    let name = document.getElementById('username').value.trim();
-    let email = document.getElementById('email').value.trim();
-    let password = document.getElementById('password').value.trim();
-    let feedback = document.getElementById('form-feedback');
+  // Form Submission Event Listener
+  form.addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent default form submission
 
-    let errors = [];
+    // Input Retrieval and Trimming
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    // Username must be at least 3 characters
-    if (name.length < 3) {
-      errors.push('Username must be at least 3 characters.');
+    // Validation Variables
+    let isValid = true;
+    let messages = [];
+
+    // Username Validation
+    if (username.length < 3) {
+      isValid = false;
+      messages.push('Username must be at least 3 characters.');
     }
 
-    // Simple email pattern check
-    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
-    if (!emailPattern.test(email)) {
-      errors.push('Please enter a valid email.');
+    // Email Validation
+    if (!email.includes('@') || !email.includes('.')) {
+      isValid = false;
+      messages.push('Please enter a valid email address.');
     }
 
-    // Password must be at least 6 characters
-    if (password.length < 6) {
-      errors.push('Password must be at least 6 characters.');
+    // Password Validation
+    if (password.length < 8) {
+      isValid = false;
+      messages.push('Password must be at least 8 characters long.');
     }
 
-    // Show feedback
-    if (errors.length > 0) {
-      feedback.style.display = "block";
-      feedback.style.backgroundColor = "#ffbaba";
-      feedback.style.color = "#d8000c";
-      feedback.innerHTML = errors.join('<br>');
+    // Displaying Feedback
+    feedbackDiv.style.display = "block";
+
+    if (isValid) {
+      feedbackDiv.textContent = "Registration successful!";
+      feedbackDiv.style.color = "#28a745"; // green
     } else {
-      feedback.style.display = "block";
-      feedback.style.backgroundColor = "#d4edda";
-      feedback.style.color = "#155724";
-      feedback.innerHTML = 'Registration successful!';
-      // Optionally reset the form
-      // form.reset();
+      feedbackDiv.innerHTML = messages.join('<br>');
+      feedbackDiv.style.color = "#dc3545"; // red
     }
   });
 });
-
 
